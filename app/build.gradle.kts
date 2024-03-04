@@ -1,11 +1,16 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-parcelize")
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
+
+apply(from = "../shared_dependencies.gradle")
 
 android {
     namespace = "com.rizfan.moviews"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.rizfan.moviews"
@@ -35,20 +40,20 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
+    dynamicFeatures += setOf(":favorite")
 }
 
 dependencies {
+    implementation(project(":core"))
+    implementation (fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    kapt ("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.4.2")
+}
+kapt {
+    correctErrorTypes =  true
+}
+hilt {
+    enableExperimentalClasspathAggregation = true
 }
