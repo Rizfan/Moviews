@@ -41,6 +41,7 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        dataBinding = true
     }
     dynamicFeatures += setOf(":favorite")
 }
@@ -48,6 +49,7 @@ android {
 dependencies {
     implementation(project(":core"))
     implementation (fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation("androidx.preference:preference:1.2.1")
 
     kapt ("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.4.2")
 }

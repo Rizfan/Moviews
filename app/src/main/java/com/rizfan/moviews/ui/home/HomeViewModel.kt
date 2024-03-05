@@ -10,4 +10,5 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(private val movieUseCase: MovieUseCase) : ViewModel() {
 
     var movies = movieUseCase.getAllMovies().asLiveData()
+
 }
