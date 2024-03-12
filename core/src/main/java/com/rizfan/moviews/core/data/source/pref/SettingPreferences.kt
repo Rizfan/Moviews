@@ -1,4 +1,4 @@
-package com.rizfan.moviews.ui.setting
+package com.rizfan.moviews.core.data.source.pref
 
 import android.content.Context
 import androidx.datastore.core.DataStore

@@ -1,6 +1,7 @@
 package com.rizfan.moviews.core.data
 
 import com.rizfan.moviews.core.data.source.local.LocalDataSource
+import com.rizfan.moviews.core.data.source.pref.SettingPreferences
 import com.rizfan.moviews.core.data.source.remote.RemoteDataSource
 import com.rizfan.moviews.core.data.source.remote.network.ApiResponse
 import com.rizfan.moviews.core.data.source.remote.response.ResultsItem
@@ -17,7 +18,8 @@ import javax.inject.Singleton
 class MovieRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
-    private val appExecutors: AppExecutors
+    private val appExecutors: AppExecutors,
+    private val settingPreferences: SettingPreferences
 ) : IMovieRepository {
     override fun getAllMovies(): Flow<Resource<List<Movies>>> =
         object : NetworkBoundResource<List<Movies>, List<ResultsItem>>() {
@@ -67,5 +69,13 @@ class MovieRepository @Inject constructor(
     override fun setFavoriteMovies(movies: Movies, state: Boolean) {
         val movieEntity = DataMapper.mapDomainToEntity(movies)
         appExecutors.diskIO().execute { localDataSource.setFavoriteMovies(movieEntity, state) }
+    }
+
+    override fun getThemeSetting(): Flow<Boolean> {
+        return settingPreferences.getThemeSetting()
+    }
+
+    override suspend fun setThemeSetting(state: Boolean) {
+        settingPreferences.saveThemeSetting(state)
     }
 }

@@ -12,4 +12,6 @@ class MovieInteractor @Inject constructor(private val movieRepository: IMovieRep
 
     override fun setFavoriteMovies(movies: Movies, state: Boolean) = movieRepository.setFavoriteMovies(movies, state)
     override fun searchMovies(query: String) = movieRepository.searchMovies(query)
+    override fun getThemeSetting() = movieRepository.getThemeSetting()
+    override suspend fun setThemeSetting(state: Boolean) = movieRepository.setThemeSetting(state)
 }

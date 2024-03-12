@@ -9,22 +9,21 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.rizfan.moviews.databinding.FragmentSettingBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingFragment : Fragment() {
 
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel : SettingViewModel by viewModels{
-        SettingViewModelFactory.getInstance(requireActivity().application, SettingPreferences(requireContext()))
-    }
-
+    val viewModel : SettingViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val switchTheme = binding.switchTheme
 
-        viewModel.getThemeSettings().observe(viewLifecycleOwner) {isDarkModeActive: Boolean ->
+        viewModel.getThemeSetting.observe(viewLifecycleOwner) {isDarkModeActive: Boolean ->
             if (isDarkModeActive) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 switchTheme.isChecked = true
